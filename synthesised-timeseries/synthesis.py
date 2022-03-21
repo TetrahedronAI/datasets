@@ -20,9 +20,7 @@ def gen_pattern(pattern_length):
     """
     random.seed(rd.randint(0, 10000))
     o = [random.randint(15, 35)]
-    for _ in range(pattern_length):
-        o.append(o[-1] + random.normal(0, 1))
-
+    o.extend(o[-1] + random.normal(0, 1) for _ in range(pattern_length))
     return o
 
 
@@ -56,9 +54,7 @@ def synthesise(length, pattern_length):
     for _ in range(length):  # time complexity O(n) = n^2
         to_add = []  # generate data that allows for noise input
         for i in pattern:
-            for _ in range(3):
-                to_add.append(i)
-
+            to_add.extend(i for _ in range(3))
         shift = random.normal(
             0, 3
         )  # how much each periodic interval should be shifted up/down
