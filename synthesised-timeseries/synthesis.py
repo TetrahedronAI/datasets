@@ -1,3 +1,4 @@
+import itertools
 import random as rd
 
 import numpy as np
@@ -20,9 +21,7 @@ def gen_pattern(pattern_length):
     """
     random.seed(rd.randint(0, 10000))
     o = [random.randint(15, 35)]
-    for _ in range(pattern_length):
-        o.append(o[-1] + random.normal(0, 1))
-
+    o.extend(o[-1] + random.normal(0, 1) for _ in range(pattern_length))
     return o
 
 
@@ -54,11 +53,7 @@ def synthesise(length, pattern_length):
     ]  # to stop error around line: "o = [*o, *join_sequence(o[-1], to_add[0], 15, 3), *to_add.tolist()]"
 
     for _ in range(length):  # time complexity O(n) = n^2
-        to_add = []  # generate data that allows for noise input
-        for i in pattern:
-            for _ in range(3):
-                to_add.append(i)
-
+        to_add = [i for i, _ in itertools.product(pattern, range(3))]
         shift = random.normal(
             0, 3
         )  # how much each periodic interval should be shifted up/down
