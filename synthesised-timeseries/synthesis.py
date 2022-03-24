@@ -54,6 +54,7 @@ def synthesise(length, pattern_length):
 
     for _ in range(length):  # time complexity O(n) = n^2
         to_add = [i for i, _ in itertools.product(pattern, range(3))]
+
         shift = random.normal(
             0, 3
         )  # how much each periodic interval should be shifted up/down
